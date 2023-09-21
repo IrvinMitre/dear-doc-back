@@ -1,0 +1,9 @@
+{
+    "extends": "@typescript-eslint/eslint-plugin/recommended",
+    "rules": {
+        "quotes": [
+            "error",
+            "double"
+        ]
+    }
+}
