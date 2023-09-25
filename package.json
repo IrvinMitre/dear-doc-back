@@ -1,7 +1,7 @@
 {
-  "name": "dear-doctor-api",
+  "name": "dear-doc-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A API build with MongoDB and Typescript.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts"
