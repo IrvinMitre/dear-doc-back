@@ -1,5 +1,5 @@
 import { JWT_Response } from "../../interfaces/jwt.interface";
-import UserService from "../../services/user.service";
+import UserService from "../../services/users/user.service";
 import { Request, Response } from "express";
 import { isValidObject } from "../../guards/isValidObject.guard";
 import { LoginUserDto } from "../../dtos/user/loginUser.dto";
