@@ -5,9 +5,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 mongoose.connect(
   `mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASSWORD}@${process.env.MONGODBHOST}/${process.env.MONGODBDATABASE}`,
   {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    authMechanism: 'default',
+    authMechanism: 'DEFAULT',
     authSource: 'admin',
   }
 );

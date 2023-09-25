@@ -4,6 +4,7 @@ import mongoose from '../database';
 const schema = new mongoose.Schema({
   name: String,
   favorites: Array<String>,
+  password: String,
   created_at: {
     type: Date,
     default: Date.now,
