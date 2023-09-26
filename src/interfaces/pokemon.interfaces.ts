@@ -1,7 +1,7 @@
-export interface Pokemon {
-  _id: string;
+export interface PokemonRegister {
+  _id?: string;
   name: string;
-  type: Array<String>;
+  types: Array<String>;
   image: string;
   id_poke_api: number;
 }

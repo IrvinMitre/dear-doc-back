@@ -5,9 +5,9 @@ interface typePokemon {
 }
 
 export interface PokemonPokeApi {
-  id: string;
+  id: number;
   name: string;
-  type: Array<typePokemon>;
+  types: Array<typePokemon>;
   sprites: {
     front_default: string;
   };

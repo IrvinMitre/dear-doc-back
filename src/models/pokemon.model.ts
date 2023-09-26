@@ -1,9 +1,9 @@
-import { Pokemon } from 'src/interfaces/pokemon.interfaces';
+import { PokemonRegister } from 'src/interfaces/pokemon.interfaces';
 import mongoose from '../database';
 
 const schema = new mongoose.Schema({
   name: String,
-  type: Array<String>,
+  types: Array<String>,
   image: String,
   id_poke_api: Number,
   created_at: {
@@ -12,6 +12,6 @@ const schema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model<Pokemon>('Pokemon', schema);
+const Pokemon = mongoose.model<PokemonRegister>('Pokemon', schema);
 
-export default User;
+export default Pokemon;
