@@ -1,7 +1,7 @@
 import PokeApiService from "../pokeApi";
 import Pokemon from "../../models/pokemon.model";
 import { PokemonRegister } from "src/interfaces/pokemon.interfaces";
-import { PokemonResponse } from "src/interfaces/pokemonResponse.interface";
+import { PokemonResponse } from "../../interfaces/pokemonResponse.interface";
 import { sortByElementInJSON } from "../../utils/orderpokemons";
 import UserService from "../users";
 
@@ -20,6 +20,7 @@ export default class PokemonService {
   ): Promise<PokemonResponse> {
     const pokemons = await this.pokeApiService.getListPokemon(limit, offset);
     const { results, count } = pokemons;
+    console.log(results)
 
     const pokemonMap = new Map<string, PokemonRegister>();
     await Promise.all(
@@ -57,6 +58,7 @@ export default class PokemonService {
   async getFavoritesPokemons(name: string) {
     const user = await this.userService.getUserByName(name);
     let pokemons = [];
+  
     if (user?.favorites) {
       for (const current of user?.favorites) {
         const pokemon = await this.getPokemon(current as string);
@@ -64,6 +66,19 @@ export default class PokemonService {
       }
     }
     return pokemons;
+  }
+
+  async addFavorites(nameUser: string, namePokemon: string){
+    const user = await this.userService.getUserByName(nameUser);
+    const newFavorites= user?.favorites;
+    if((newFavorites as Array<String>).includes(namePokemon)){
+      return false
+    }
+    else{
+      newFavorites?.push(namePokemon)
+      await this.userService.updatePokemons(newFavorites as Array<String>, user?._id as string)
+      return true;
+    }
   }
 
   async getPokemon(name: string) {
@@ -75,4 +90,8 @@ export default class PokemonService {
   async createPokemon(pokemon: PokemonRegister) {
     return await Pokemon.create(pokemon);
   }
+
+
+
+
 }

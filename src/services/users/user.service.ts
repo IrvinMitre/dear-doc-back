@@ -11,4 +11,8 @@ export default class UserService {
     });
   }
 
+  async updatePokemons(favorites: Array<String>, _id: string) {
+    return await User.findOneAndUpdate({_id}, {favorites});
+  }
+
 }
