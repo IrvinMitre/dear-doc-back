@@ -70,21 +70,39 @@ class pokemonsController {
         );
     }
     try {
-     const responseFavorites = await this.pokemonService.addFavorites(
+      const responseFavorites = await this.pokemonService.addFavorites(
         req.body.nameUser,
         req.body.namePokemon
       );
 
-      if(!responseFavorites){
+      if (!responseFavorites) {
         return res
-        .status(290)
-        .send(
-          new BaseError(ErrorCodes.POKE_EXIST, 290, ErrorMessages.POKE_EXIST)
-        );
-
+          .status(290)
+          .send(
+            new BaseError(ErrorCodes.POKE_EXIST, 290, ErrorMessages.POKE_EXIST)
+          );
       }
 
       return res.status(200).send(req.body.nameUser);
+    } catch (error) {
+      return res.status(500).send({
+        error: new BaseError(
+          ErrorCodes.GENERIC_ERROR,
+          500,
+          ErrorMessages.GENERIC_ERROR
+        ),
+      });
+    }
+  };
+
+  searchPokemon = async (
+    req: Request,
+    res: Response
+  ): Promise<Response<void> | Error> => {
+    try {
+      const { name = "" } = req.query;
+      const pokemons = await this.pokemonService.searchPokemon(name as string);
+      return res.status(200).send(pokemons);
     } catch (error) {
       return res.status(500).send({
         error: new BaseError(

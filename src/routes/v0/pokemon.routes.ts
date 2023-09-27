@@ -13,6 +13,7 @@ export class PokemonRouter {
     this.router.get('/getPokemons', this.pokemon.getPokemons);
     this.router.get('/getFavoritesPokemons', this.pokemon.getFavoritesPokemons);
     this.router.post('/addFavoritesPokemons', this.pokemon.addFavoritePokemon);
+    this.router.get('/searchPokemons', this.pokemon.searchPokemon);
   };
 }
 

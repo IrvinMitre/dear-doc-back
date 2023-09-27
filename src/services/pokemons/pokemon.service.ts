@@ -20,7 +20,6 @@ export default class PokemonService {
   ): Promise<PokemonResponse> {
     const pokemons = await this.pokeApiService.getListPokemon(limit, offset);
     const { results, count } = pokemons;
-    console.log(results)
 
     const pokemonMap = new Map<string, PokemonRegister>();
     await Promise.all(
@@ -43,14 +42,14 @@ export default class PokemonService {
         }
       })
     );
-    const pokemonorder = Array.from(pokemonMap.values());
-    sortByElementInJSON(pokemonorder, "id_poke_api");
+    const pokemonOrder = Array.from(pokemonMap.values());
+    sortByElementInJSON(pokemonOrder, "id_poke_api");
 
     const pokemonResponse = {
       limit: limit,
       offset: offset,
       count: count,
-      pokemons: pokemonorder,
+      pokemons: pokemonOrder,
     };
     return pokemonResponse;
   }
@@ -58,25 +57,28 @@ export default class PokemonService {
   async getFavoritesPokemons(name: string) {
     const user = await this.userService.getUserByName(name);
     let pokemons = [];
-  
+
     if (user?.favorites) {
       for (const current of user?.favorites) {
         const pokemon = await this.getPokemon(current as string);
-        pokemons.push(pokemon);
+        pokemons.push(pokemon as PokemonRegister);
       }
     }
+    sortByElementInJSON(pokemons, "id_poke_api");
     return pokemons;
   }
 
-  async addFavorites(nameUser: string, namePokemon: string){
+  async addFavorites(nameUser: string, namePokemon: string) {
     const user = await this.userService.getUserByName(nameUser);
-    const newFavorites= user?.favorites;
-    if((newFavorites as Array<String>).includes(namePokemon)){
-      return false
-    }
-    else{
-      newFavorites?.push(namePokemon)
-      await this.userService.updatePokemons(newFavorites as Array<String>, user?._id as string)
+    const newFavorites = user?.favorites;
+    if ((newFavorites as Array<String>).includes(namePokemon)) {
+      return false;
+    } else {
+      newFavorites?.push(namePokemon);
+      await this.userService.updatePokemons(
+        newFavorites as Array<String>,
+        user?._id as string
+      );
       return true;
     }
   }
@@ -91,7 +93,9 @@ export default class PokemonService {
     return await Pokemon.create(pokemon);
   }
 
-
-
-
+  async searchPokemon(name: string) {
+    const query = { name: { $regex: name } };
+    const documents = await Pokemon.find(query).limit(9);
+    return documents;
+  }
 }
