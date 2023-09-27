@@ -11,6 +11,7 @@ export class PokemonRouter {
 
   init = () => {
     this.router.get('/getPokemons', this.pokemon.getPokemons);
+    this.router.get('/getFavoritesPokemons', this.pokemon.getFavoritesPokemons);
   };
 }
 

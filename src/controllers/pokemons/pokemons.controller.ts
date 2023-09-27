@@ -32,6 +32,27 @@ class pokemonsController {
       });
     }
   };
+
+  getFavoritesPokemons = async (
+    req: Request,
+    res: Response
+  ): Promise<Response<void> | Error> => {
+    try {
+      const { name = '' } = req.query;
+      const pokemons = await this.pokemonService.getFavoritesPokemons(name as string)
+      return res.status(200).send(pokemons);
+    } catch (error) {
+      return res.status(500).send({
+        error: new BaseError(
+          ErrorCodes.GENERIC_ERROR,
+          500,
+          ErrorMessages.GENERIC_ERROR
+        ),
+      });
+    }
+
+  }
+
 }
 
 export default pokemonsController;

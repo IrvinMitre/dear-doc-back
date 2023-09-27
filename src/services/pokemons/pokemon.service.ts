@@ -3,12 +3,15 @@ import Pokemon from "../../models/pokemon.model";
 import { PokemonRegister } from "src/interfaces/pokemon.interfaces";
 import { PokemonResponse } from "src/interfaces/pokemonResponse.interface";
 import { sortByElementInJSON } from "../../utils/orderpokemons";
+import UserService from "../users";
 
 export default class PokemonService {
   private pokeApiService: PokeApiService;
+  private userService: UserService;
 
   constructor() {
     this.pokeApiService = new PokeApiService();
+    this.userService = new UserService();
   }
 
   async getLisPokemons(
@@ -22,10 +25,9 @@ export default class PokemonService {
     await Promise.all(
       results.map(async (pokemon) => {
         const pokemonMongo = await this.getPokemon(pokemon.name);
-        if (pokemonMongo && pokemonMongo.id_poke_api) {
+        if (pokemonMongo) {
           pokemonMap.set(pokemon.name, pokemonMongo);
-        }
-        else{
+        } else {
           const currentPokemon = await this.pokeApiService.GetdetailPokemon(
             pokemon.name
           );
@@ -35,14 +37,13 @@ export default class PokemonService {
             image: currentPokemon.sprites.front_default,
             id_poke_api: currentPokemon.id,
           };
-          const registerMongoPokemon = this.createPokemon(pokemonForMongo);
-          console.log(registerMongoPokemon)
+          this.createPokemon(pokemonForMongo);
           pokemonMap.set(pokemon.name, pokemonForMongo);
         }
       })
     );
-    const pokemonorder = Array.from(pokemonMap.values())
-    sortByElementInJSON(pokemonorder, 'id_poke_api')
+    const pokemonorder = Array.from(pokemonMap.values());
+    sortByElementInJSON(pokemonorder, "id_poke_api");
 
     const pokemonResponse = {
       limit: limit,
@@ -51,6 +52,18 @@ export default class PokemonService {
       pokemons: pokemonorder,
     };
     return pokemonResponse;
+  }
+
+  async getFavoritesPokemons(name: string) {
+    const user = await this.userService.getUserByName(name);
+    let pokemons = [];
+    if (user?.favorites) {
+      for (const current of user?.favorites) {
+        const pokemon = await this.getPokemon(current as string);
+        pokemons.push(pokemon);
+      }
+    }
+    return pokemons;
   }
 
   async getPokemon(name: string) {
