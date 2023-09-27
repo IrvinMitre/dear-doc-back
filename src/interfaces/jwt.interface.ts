@@ -1,4 +1,4 @@
 export interface JWT_Response {
-    jwt: string;
-    refresh_jwt: string;
-  }
+  jwt: string;
+  refresh_jwt: string;
+}

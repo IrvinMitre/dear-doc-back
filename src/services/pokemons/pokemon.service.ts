@@ -2,6 +2,7 @@ import PokeApiService from "../pokeApi";
 import Pokemon from "../../models/pokemon.model";
 import { PokemonRegister } from "src/interfaces/pokemon.interfaces";
 import { PokemonResponse } from "src/interfaces/pokemonResponse.interface";
+import { sortByElementInJSON } from "../../utils/orderpokemons";
 
 export default class PokemonService {
   private pokeApiService: PokeApiService;
@@ -21,7 +22,7 @@ export default class PokemonService {
     await Promise.all(
       results.map(async (pokemon) => {
         const pokemonMongo = await this.getPokemon(pokemon.name);
-        if (pokemonMongo) {
+        if (pokemonMongo && pokemonMongo.id_poke_api) {
           pokemonMap.set(pokemon.name, pokemonMongo);
         }
         else{
@@ -40,12 +41,14 @@ export default class PokemonService {
         }
       })
     );
+    const pokemonorder = Array.from(pokemonMap.values())
+    sortByElementInJSON(pokemonorder, 'id_poke_api')
 
     const pokemonResponse = {
       limit: limit,
       offset: offset,
       count: count,
-      pokemons: Array.from(pokemonMap.values()),
+      pokemons: pokemonorder,
     };
     return pokemonResponse;
   }
