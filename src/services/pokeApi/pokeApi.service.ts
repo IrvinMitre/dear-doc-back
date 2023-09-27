@@ -12,7 +12,6 @@ export default class PokeApiService {
       );
       return response.data as PokemonPokeApi;
     } catch (error) {
-      console.log(error);
       throw new Error(
         `Get request to pokemon/${pokemon} failed: ${(error as Error).message}`
       );
@@ -32,7 +31,6 @@ export default class PokeApiService {
       );
       return response.data as PokemonList;
     } catch (error) {
-      console.log(error);
       throw new Error(
         `Get request to pokemon/ failed: ${(error as Error).message}`
       );
