@@ -5,7 +5,7 @@ import { ErrorCodes, ErrorMessages } from "../../shared/errors/error";
 import { isValidObject } from "../../guards/isValidObject.guard";
 import { FavroitePokemon } from "../../dtos/pokemon/favoritePokemon.dto";
 
-class pokemonsController {
+class PokemonsController {
   private pokemonService: PokemonService;
 
   constructor() {
@@ -18,7 +18,7 @@ class pokemonsController {
   ): Promise<Response<void> | Error> => {
     try {
       const { limit = 9, offset = 0 } = req.query;
-      const pokemons = await this.pokemonService.getLisPokemons(
+      const pokemons = await this.pokemonService.getPokemonsList(
         Number(limit),
         Number(offset)
       );
@@ -35,7 +35,7 @@ class pokemonsController {
     }
   };
 
-  getFavoritesPokemons = async (
+  getFavoritePokemons = async (
     req: Request,
     res: Response
   ): Promise<Response<void> | Error> => {
@@ -70,7 +70,7 @@ class pokemonsController {
         );
     }
     try {
-      const responseFavorites = await this.pokemonService.addFavorites(
+      const responseFavorites = await this.pokemonService.addFavoritePokemon(
         req.body.nameUser,
         req.body.namePokemon
       );
@@ -115,4 +115,4 @@ class pokemonsController {
   };
 }
 
-export default pokemonsController;
+export default PokemonsController;

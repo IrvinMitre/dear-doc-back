@@ -33,4 +33,4 @@ To run this frontend application, you'll need to follow these steps:
     npm run dev
     ```
 
-4. [Here is](https://www.postman.com/bold-space-164713/workspace/deardoc/collection/25299245-37712e30-7e1e-4abb-9a15-20b4838e45df?action=share&creator=25299245&active-environment=25299245-cd0e461d-2160-413c-bfdf-2004fa6f72c1) a collection of Postman requests. Use the GBM enviroment to set up the environment variables.
+4. [Here is](https://www.postman.com/bold-space-164713/workspace/deardoc/collection/25299245-37712e30-7e1e-4abb-9a15-20b4838e45df?action=share&creator=25299245&active-environment=25299245-cd0e461d-2160-413c-bfdf-2004fa6f72c1) a collection of Postman requests. Use the DearDoc code challenge enviroment to set up the environment variables.

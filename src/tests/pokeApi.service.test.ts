@@ -38,7 +38,7 @@ describe("PokeApiService", () => {
     jest.spyOn(axios, "get").mockResolvedValue({
       data: pokemonPokeApi,
     });
-    const pokeApi = await pokeApiService.getListPokemon(5, 0);
+    const pokeApi = await pokeApiService.getPokemonList(5, 0);
     expect(pokeApi).toEqual(pokemonPokeApi);
   });
 });

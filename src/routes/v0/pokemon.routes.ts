@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import pokemonsController from '../../controllers/pokemons/pokemons.controller';
+import PokemonsController from '../../controllers/pokemons/pokemons.controller';
 
 export class PokemonRouter {
-  pokemon = new pokemonsController();
+  pokemon = new PokemonsController();
   router: Router;
   constructor() {
     this.router = Router();
@@ -11,7 +11,7 @@ export class PokemonRouter {
 
   init = () => {
     this.router.get('/getPokemons', this.pokemon.getPokemons);
-    this.router.get('/getFavoritesPokemons', this.pokemon.getFavoritesPokemons);
+    this.router.get('/getFavoritesPokemons', this.pokemon.getFavoritePokemons);
     this.router.post('/addFavoritesPokemons', this.pokemon.addFavoritePokemon);
     this.router.get('/searchPokemons', this.pokemon.searchPokemon);
   };

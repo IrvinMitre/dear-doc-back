@@ -14,11 +14,11 @@ export default class PokemonService {
     this.userService = new UserService();
   }
 
-  async getLisPokemons(
+  async getPokemonsList(
     limit: number,
     offset: number
   ): Promise<PokemonResponse> {
-    const pokemons = await this.pokeApiService.getListPokemon(limit, offset);
+    const pokemons = await this.pokeApiService.getPokemonList(limit, offset);
     const { results, count } = pokemons;
 
     const pokemonMap = new Map<string, PokemonRegister>();
@@ -28,7 +28,7 @@ export default class PokemonService {
         if (pokemonMongo) {
           pokemonMap.set(pokemon.name, pokemonMongo);
         } else {
-          const currentPokemon = await this.pokeApiService.GetdetailPokemon(
+          const currentPokemon = await this.pokeApiService.getPokemonDetail(
             pokemon.name
           );
           const pokemonForMongo: PokemonRegister = {
@@ -68,7 +68,7 @@ export default class PokemonService {
     return pokemons;
   }
 
-  async addFavorites(nameUser: string, namePokemon: string) {
+  async addFavoritePokemon(nameUser: string, namePokemon: string) {
     const user = await this.userService.getUserByName(nameUser);
     const newFavorites = user?.favorites;
     if ((newFavorites as Array<String>).includes(namePokemon)) {

@@ -1,4 +1,4 @@
-interface typePokemon {
+interface pokemonType {
   type: {
     name: string;
   };
@@ -7,7 +7,7 @@ interface typePokemon {
 export interface PokemonPokeApi {
   id: number;
   name: string;
-  types: Array<typePokemon>;
+  types: Array<pokemonType>;
   sprites: {
     front_default: string;
   };
